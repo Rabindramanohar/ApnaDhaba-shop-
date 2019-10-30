@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -8,14 +8,20 @@ import { Recipe } from '../recipe.model';
 })
 export class RecipeListComponent implements OnInit {
 
+  @Output() recipeWasSelected = new EventEmitter<Recipe>()
   recipes:Recipe[] = [
-    new Recipe('A Test Recipe', 'This is for the test', 'https://minimalistbaker.com/wp-content/uploads/2019/09/AMAZING-1-Pan-Shredded-Mexican-Chicken-30-minutes-9-ingredients-Great-for-burritos-tacos-enchiladas-and-more-glutenfree-chicken-mexican-grainfree-recipe-minimalistbaker-16-600x900.jpg'),
-    new Recipe('A Test Recipe', 'This is for the test', 'https://minimalistbaker.com/wp-content/uploads/2019/09/AMAZING-1-Pan-Shredded-Mexican-Chicken-30-minutes-9-ingredients-Great-for-burritos-tacos-enchiladas-and-more-glutenfree-chicken-mexican-grainfree-recipe-minimalistbaker-16-600x900.jpg')
+    new Recipe('A Test Recipe', 'This is for the test', 'https://toriavey.com/images/2011/01/Falafel-10-640x480.jpg'),
+    new Recipe('Another Recipe', 'This is for the test', 'https://dw9y5muw47j76.cloudfront.net/recipes/_650x486_crop_center-center_none/Slow-Cooker-15-BEAN-Soup-main.jpg?mtime=20190131164600')
   ];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onRecipeSelected(recipe: Recipe) {
+    this.recipeWasSelected.emit(recipe);
+      
   }
 
 }
