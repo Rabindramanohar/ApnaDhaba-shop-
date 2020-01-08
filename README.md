@@ -38,3 +38,11 @@ Angular project
 
 # Testing to push code only
 >>>>>>> need help email me @ robinmanohar@gmail.com
+
+
+# Git create new branches
+git checkout -b alpha
+git branch --list
+git checkout
+
+git push origin alpha
