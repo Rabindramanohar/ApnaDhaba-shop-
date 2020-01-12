@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 export class RecipeService {
     recipeChanged = new Subject<Recipe[]>();
 
-   private recipes: Recipe[] = [
+   /* private recipes: Recipe[] = [
         new Recipe('Tasty Daal Pakoda',
         'This is for the test',
         'https://toriavey.com/images/2011/01/Falafel-10-640x480.jpg',
@@ -25,9 +25,16 @@ export class RecipeService {
             new Ingredient('channa', 3),
             new Ingredient('green Peas', 5)
         ])
-      ];
+      ]; */
+
+      private recipes: Recipe[] = [];
 
       constructor(private slService: ShoppingListService) {}
+
+      setRecipes(recipes: Recipe[]) {
+        this.recipes = recipes;
+        this.recipeChanged.next(this.recipes.slice());
+      }
 
       getRecipes() {
           return this.recipes.slice();
