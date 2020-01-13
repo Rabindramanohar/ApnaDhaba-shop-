@@ -18,6 +18,8 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeService } from './recipes/recipes.service';
 import { from } from 'rxjs';
+import { AuthComponent } from './auth/auth.component';
+import { LoadingSnipper } from './shared/loading-snipper/loading-snipper';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { from } from 'rxjs';
     ShoppingEditComponent,
     Dropdowndirective,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    AuthComponent,
+    LoadingSnipper,
   ],
   imports: [
     BrowserModule,
