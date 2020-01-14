@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, Subject } from 'rxjs';
+import { User } from './user.model';
 
-interface AuthResponseData {
-  idToken: string,
-  email: string,
-  refreshToken: string,
-  expiresIn: string,
-  localId: string,
+export interface AuthResponseData {
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered ?: boolean;
 }
 
 @Injectable({
@@ -16,24 +18,49 @@ interface AuthResponseData {
 })
 export class AuthService {
 
+  user = new Subject<User>();
+
   constructor(private http: HttpClient) { }
 
   signup(email: string, password: string) {
-    return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCZ4Mz_FGaGvyf-zQKCmC-QfxHJc8PoXU4',
+    return this.http.post<AuthResponseData>(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCZ4Mz_FGaGvyf-zQKCmC-QfxHJc8PoXU4',
     {
-      email: email,
-      password: password,
+      email,
+      password,
       returnSecureToken: true
-    }).pipe(catchError(errorRes => {
-      let errorMessage: string = 'An unknown error is occured!';
-      if (!errorRes.error || !errorRes.error.error) {
+    }).pipe(catchError(this.handleError));
+  }
+
+  login(email: string, password: string) {
+    return this.http.post<AuthResponseData>(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCZ4Mz_FGaGvyf-zQKCmC-QfxHJc8PoXU4',
+      {
+        email,
+        password,
+        returnSecureToken: true,
+      }).pipe(catchError(this.handleError));
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error is occured!';
+    if (!errorRes.error || !errorRes.error.error) {
         return throwError(errorMessage);
       }
-      switch (errorRes.error.error.message) {
+    switch (errorRes.error.error.message) {
         case 'EMAIL_EXISTS':
-          errorMessage= 'This email is already exist!'
+          errorMessage = 'This email is already exist!';
+          break;
+        case 'EMAIL_NOT_FOUND':
+          errorMessage = 'This email id is not present!';
+          break;
+        case 'INVALID_PASSWORD':
+          errorMessage = 'This password is invalid!';
+          break;
+          /* default :
+          errorMessage = 'An unknown error is occured!'; */
+
       }
-      return throwError(errorMessage);
-    }))
+    return throwError(errorMessage);
   }
 }
