@@ -21,6 +21,7 @@ import { from } from 'rxjs';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSnipper } from './shared/loading-snipper/loading-snipper';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     RecipeEditComponent,
     AuthComponent,
     LoadingSnipper,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
