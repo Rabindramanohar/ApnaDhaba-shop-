@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -22,6 +22,7 @@ import { AuthComponent } from './auth/auth.component';
 import { LoadingSnipper } from './shared/loading-snipper/loading-snipper';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AlertComponent } from './shared/alert/alert.component';
+import { PlaceholderDirective } from './shared/placeholder/placeholder.directive';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { AlertComponent } from './shared/alert/alert.component';
     AuthComponent,
     LoadingSnipper,
     AlertComponent,
+    PlaceholderDirective,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,9 @@ import { AlertComponent } from './shared/alert/alert.component';
   ],
   providers: [ShoppingListService, RecipeService,
   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AlertComponent
+  ]
 })
 export class AppModule { }

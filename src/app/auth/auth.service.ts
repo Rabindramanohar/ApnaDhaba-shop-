@@ -23,7 +23,7 @@ export class AuthService {
   tokenExpirationTimer: any;
 
   constructor(private http: HttpClient,
-    private router: Router) { }
+              private router: Router) { }
 
   signup(email: string, password: string) {
     return this.http.post<AuthResponseData>(
@@ -80,7 +80,6 @@ export class AuthService {
 
   autoLogout(expirationDuration: number) {
     console.log(expirationDuration);
-    
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration);
@@ -88,10 +87,10 @@ export class AuthService {
 
   private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-      const user = new User(email,  userId, token, expirationDate);
-      this.user.next(user);
-      this.autoLogout(expiresIn * 1000);
-      localStorage.setItem('userData', JSON.stringify(user));
+    const user = new User(email,  userId, token, expirationDate);
+    this.user.next(user);
+    this.autoLogout(expiresIn * 1000);
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
