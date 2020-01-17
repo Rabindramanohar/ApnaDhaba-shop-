@@ -17,7 +17,8 @@ import { CommonModule } from '@angular/common';
         AlertComponent,
         LoadingSnipperComponent,
         PlaceholderDirective,
-        DropdownDirective
+        DropdownDirective,
+        CommonModule
     ],
     entryComponents: [AlertComponent]
 })
